@@ -1,0 +1,54 @@
+
+digraph BonusCFG {
+    graph [label="bonus() - Control Flow Graph", labelloc=t,
+           fontsize=18, rankdir=TB];
+    node [shape=box, style=rounded, fontsize=10];
+    edge [fontsize=9];
+
+    start [label="31: bonus(attendance, threshold)"];
+    check [label="32: attendance == null || threshold < 0",
+           shape=diamond];
+    error [label="33: throw IllegalArgumentException"];
+    init [label="35-37: present=0; streak=0; best=0"];
+    loop [label="38: next attendance element?", shape=diamond];
+    present [label="39: a > 0?", shape=diamond];
+    increment [label="40-41: present++; streak++"];
+    bestCheck [label="42: streak > best?", shape=diamond];
+    updateBest [label="43: best = streak"];
+    reset [label="46: streak = 0"];
+    scoreInit [label="49: score = 0"];
+    threshold [label="50: present >= threshold?", shape=diamond];
+    scoreFive [label="51: score = 5"];
+    streakCheck [label="53: best >= 5?", shape=diamond];
+    scoreThree [label="54: score = score + 3"];
+    finish [label="56: return score"];
+    end [label="End", shape=oval];
+
+    start -> check;
+    check -> error [label="T: testNullAttendance, testNegativeThreshold"];
+    check -> init [label="F: testEmptyAttendance, testLongStreakWithBreak"];
+
+    init -> loop;
+    loop -> present [label="T: testLongStreakWithBreak"];
+    loop -> scoreInit [label="F: testEmptyAttendance"];
+
+    present -> increment [label="T: testLongStreakWithBreak"];
+    present -> reset [label="F: testAllAbsentThresholdZero"];
+
+    increment -> bestCheck;
+    bestCheck -> updateBest [label="T: testLongStreakWithBreak"];
+    bestCheck -> loop [label="F: testShorterStreakAfterBreak"];
+    updateBest -> loop;
+    reset -> loop;
+
+    scoreInit -> threshold;
+    threshold -> scoreFive [label="T: testExactThreshold"];
+    threshold -> streakCheck [label="F: testEmptyAttendance"];
+    scoreFive -> streakCheck;
+
+    streakCheck -> scoreThree [label="T: testLongStreakWithBreak"];
+    streakCheck -> finish [label="F: testEmptyAttendance"];
+    scoreThree -> finish;
+    finish -> end;
+    error -> end;
+}
