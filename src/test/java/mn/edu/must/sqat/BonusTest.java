@@ -64,4 +64,11 @@ public class BonusTest {
             DataFlowTargets.bonus(new int[]{1, 1, 1, 0, 1}, 4));
     }
 
+@Test
+@DisplayName("B9: separated attendance detects M2")
+void testSeparatedAttendanceNoLongStreak() {
+    int[] attendance = {1, 0, 1, 0, 1, 0, 1, 0, 1};
+    assertEquals(5, DataFlowTargets.bonus(attendance, 5));
+}
+
 }

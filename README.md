@@ -1,10 +1,10 @@
 
 # Лаборатори №10 — Өгөгдлийн урсгалын тест (Definition-Use хосууд)
 
-**Оюутны нэр:** Ж.Буянхишиг  
-**Оюутны код:** B232270114  
-**Төсөл:** lab10-dataflow  
-**GitHub:** https://github.com/Buyka1108/lab10-dataflow  
+**Оюутны нэр:** Ж.Буянхишиг
+**Оюутны код:** B232270114
+**Төсөл:** lab10-dataflow
+**GitHub:** https://github.com/Buyka1108/lab10-dataflow
 **Ажиллах branch:** lab10-work
 
 ## 1. Лабораторийн зорилго
@@ -61,21 +61,24 @@ Ubuntu дахь төслийн байршил:
 
 Төслийг VS Code дээр нээсэн.
 
-### 3.1 Төслийн бүтэц
-
-```text
 lab10-dataflow/
 ├── .gitignore
 ├── pom.xml
+├── README.md
+├── cfg-bonus.dot
+├── cfg-bonus.png
+├── docs/
+│   └── bonus-du-analysis.md
+├── results/
+│   ├── jacoco-final.csv
+│   ├── mvn-verify-final.txt
+│   └── mvn-test-M2-retest.txt
 └── src/
-    ├── main/
-    │   └── java/mn/edu/must/sqat/
-    │       └── DataFlowTargets.java
-    └── test/
-        └── java/mn/edu/must/sqat/
-            └── GcdTest.java
-```
-
+    ├── main/java/mn/edu/must/sqat/
+    │   └── DataFlowTargets.java
+    └── test/java/mn/edu/must/sqat/
+        ├── GcdTest.java
+        └── BonusTest.java
 ## 4. Git болон GitHub тохиргоо
 
 Төслийг Git repository болгож, эхний Starter commit-ийг хийсэн.
@@ -109,7 +112,7 @@ git push -u origin lab10-work
 
 Хоёр branch GitHub руу амжилттай push хийгдсэн.
 
-### 4.1 Хийгдсэн commit-ууд
+### 4.1 Эхний commit-ууд
 
 | Commit ID | Commit message |
 |---|---|
@@ -251,7 +254,7 @@ DU шинжилгээний дэлгэрэнгүй хүснэгт болон def
 
 ### JUnit тестүүд
 
-`BonusTest.java` файлд нийт 8 тест хэрэгжүүлсэн.
+`BonusTest.java` файлд нийт 9 тест хэрэгжүүлсэн.
 
 - `testLongStreakWithBreak`
 - `testEmptyAttendance`
@@ -261,10 +264,14 @@ DU шинжилгээний дэлгэрэнгүй хүснэгт болон def
 - `testNullAttendance`
 - `testNegativeThreshold`
 - `testShorterStreakAfterBreak`
+- `testSeparatedAttendanceNoLongStreak`
+
+Сүүлийн тест нь M2 алдааг илрүүлэх зорилготой.
 
 ### JaCoCo хамралт
 
-| Үзүүлэлт | All-defs үе | Нэмэлт тестийн дараа |
+
+| Үзүүлэлт | All-defs үе | Эхний 11 тестийн дараа |
 |---|---:|---:|
 | Нийт тест | 5 | 11 |
 | Branch coverage | 87.50% | 100% |
@@ -272,6 +279,9 @@ DU шинжилгээний дэлгэрэнгүй хүснэгт болон def
 | Instruction coverage | 90.12% | 96.30% |
 
 Эдгээр нь `DataFlowTargets` классын JaCoCo хамралтын үзүүлэлтүүд юм. JaCoCo нь DU хосын хамралтыг шууд хэмждэггүй.
+
+M2 алдааг илрүүлэх нэмэлт тест бичсэний дараа нийт 12 тест амжилттай ажилласан.
+
 
 ## Хэсэг C — Fault Seeding
 
@@ -282,28 +292,42 @@ DU шинжилгээний дэлгэрэнгүй хүснэгт болон def
 | M1 | `streak = streak + 1` мөрийг устгасан | 2 тест FAIL |
 | M2 | `best = present` болгосон | 11 тест PASS |
 | M3 | Ашиглагдахгүй `total` хувьсагч нэмсэн | 11 тест PASS |
+### M2 алдааг дахин шалгасан үр дүн
+
+Эхний 11 тест M2 (`best = present`) алдааг илрүүлээгүй тул `testSeparatedAttendanceNoLongStreak()` нэртэй нэмэлт тест бичсэн.
+
+Шинэ тестийн оролт:
+
+`attendance = {1, 0, 1, 0, 1, 0, 1, 0, 1}`, `threshold = 5`
+
+- Зөв кодын үр дүн: 5
+- M2 алдаатай кодын үр дүн: 8
+- M2 алдаатай код: 12 тестээс 1 FAIL
+- Эх кодыг сэргээсний дараа: 12/12 PASS
 
 ### Дүгнэлт
 
-M1 өөрчлөлтийг тестүүд илрүүлсэн. M2-ийн үед тестүүд амжилттай ажилласан тул уг өөрчлөлтийг илрүүлээгүй. M3 нь програмын буцаах утгад нөлөөлөхгүй, ашиглагдахгүй definition нэмсэн тул JUnit тестүүд амжилттай ажилласан.
+- **M1:** `streak = streak + 1` мөрийг устгахад 2 тест FAIL болж, алдаа илэрсэн.
+- **M2:** Эхний 11 тест `best = present` алдааг илрүүлээгүй. Харин `testSeparatedAttendanceNoLongStreak()` тестийг нэмсний дараа 12 тестээс 1 нь FAIL болж, алдааг амжилттай илрүүлсэн.
+- **M3:** Ашиглагдахгүй `total` хувьсагч нэмэхэд 11 тест PASS болсон. Энэ өөрчлөлт програмын буцаах утгад нөлөөлөөгүй.
 
-Туршилт бүрийн дараа эх кодыг `git restore` командаар сэргээсэн.
+Туршилтын дараа эх кодыг `git restore` командаар сэргээж, зөв код дээр бүх 12 тест амжилттай ажилласныг баталгаажуулсан.
 
 ## Эцсийн баталгаажуулалт
 
 `mvn clean verify` командыг ажиллуулахад:
 
 - GcdTest: 3 PASS
-- BonusTest: 8 PASS
-- Нийт: 11 PASS
+- BonusTest: 9 PASS
+- **Нийт: 12 PASS**
 - Failures: 0
 - Errors: 0
 - BUILD SUCCESS
 
-Эцсийн JaCoCo үр дүн:
+JaCoCo-ийн классын түвшний хамралт:
 
 - Branch coverage: 100%
 - Line coverage: 95.83%
 - Instruction coverage: 96.30%
 
-Үр дүнгийн файлууд `results/` хавтсанд хадгалагдсан.
+Эцсийн тестийн лог `results/mvn-verify-final.txt`, хамралтын тайлан `results/jacoco-final.csv` файлд хадгалагдсан.

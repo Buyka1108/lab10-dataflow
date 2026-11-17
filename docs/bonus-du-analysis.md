@@ -19,7 +19,7 @@
 | best | 37, 43 | 42, 53 |
 | score | 49, 51, 54 | 54, 56 |
 
-## 3. Гол DU хосууд ба тестүүд
+## 3. DU хосууд ба тестүүд
 
 | Хувьсагч | DU хос | Тест |
 |---|---|---|
@@ -35,18 +35,23 @@
 | streak | 36 → 41 | testLongStreakWithBreak |
 | streak | 41 → 41 | testLongStreakWithBreak |
 | streak | 41 → 42 | testLongStreakWithBreak |
-| streak | 46 → 41 | testLongStreakWithBreak |
+| streak | 41 → 43 | testLongStreakWithBreak |
 | streak | 46 → 41 | testShorterStreakAfterBreak |
 | best | 37 → 42 | testLongStreakWithBreak |
 | best | 37 → 53 | testEmptyAttendance |
 | best | 43 → 42 | testLongStreakWithBreak |
 | best | 43 → 53 | testLongStreakWithBreak |
-| score | 49 → 56 | testEmptyAttendance |
 | score | 49 → 54 | testLongStreakBelowThreshold |
-| score | 51 → 56 | testExactThreshold |
+| score | 49 → 56 | testEmptyAttendance |
 | score | 51 → 54 | testLongStreakWithBreak |
+| score | 51 → 56 | testExactThreshold |
 | score | 54 → 56 | testLongStreakWithBreak |
 
+**Тайлбар:** 41 → 43 хос нь `best = streak` мөрөнд `streak`-ийн утгыг ашиглаж байгааг илэрхийлнэ.
+
+`streak`-ийн 46 → 41 хосыг давхар бичих шаардлагагүй. Нэг DU хосыг олон тест хамарч болно.
+
+Энэ хүснэгт нь эх кодын мөрийн дугаарт тулгуурласан DU хосуудын жагсаалт юм.
 ## 4. Def-clear замын тайлбар
 
 Def-clear зам гэдэг нь хувьсагчийн definition болон use-ийн хооронд тухайн хувьсагч дахин тодорхойлогдоогүй зам юм.
