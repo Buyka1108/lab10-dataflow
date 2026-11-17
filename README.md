@@ -1,11 +1,8 @@
 
 # Лаборатори №10 — Өгөгдлийн урсгалын тест (Definition-Use хосууд)
 
-**Оюутны нэр:** Ж.Буянхишиг
-**Оюутны код:** B232270114
-**Төсөл:** lab10-dataflow
-**GitHub:** https://github.com/Buyka1108/lab10-dataflow
-**Ажиллах branch:** lab10-work
+**Оюутны нэр:** Ж.Буянхишиг  
+**Оюутны код:** B232270114  
 
 ## 1. Лабораторийн зорилго
 
@@ -61,6 +58,7 @@ Ubuntu дахь төслийн байршил:
 
 Төслийг VS Code дээр нээсэн.
 
+```text
 lab10-dataflow/
 ├── .gitignore
 ├── pom.xml
@@ -79,6 +77,7 @@ lab10-dataflow/
     └── test/java/mn/edu/must/sqat/
         ├── GcdTest.java
         └── BonusTest.java
+```
 ## 4. Git болон GitHub тохиргоо
 
 Төслийг Git repository болгож, эхний Starter commit-ийг хийсэн.
