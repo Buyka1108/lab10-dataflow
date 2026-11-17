@@ -235,3 +235,75 @@ target/site/jacoco/jacoco.csv
 ```
 
 Maven-ийн гаралтаар JaCoCo execution data-г амжилттай уншиж, нэг class-д анализ хийсэн нь батлагдсан.
+## Хэсэг B — bonus() функцийн Data Flow Testing
+
+`bonus(int[] attendance, int threshold)` функцийн CFG диаграмм болон Definition–Use шинжилгээг хийв.
+
+### CFG диаграмм
+
+![bonus CFG](cfg-bonus.png)
+
+CFG-ийн эх файл: `cfg-bonus.dot`
+
+### DU шинжилгээ
+
+DU шинжилгээний дэлгэрэнгүй хүснэгт болон def-clear замын тайлбарыг `docs/bonus-du-analysis.md` файлд хадгалсан.
+
+### JUnit тестүүд
+
+`BonusTest.java` файлд нийт 8 тест хэрэгжүүлсэн.
+
+- `testLongStreakWithBreak`
+- `testEmptyAttendance`
+- `testAllAbsentThresholdZero`
+- `testExactThreshold`
+- `testLongStreakBelowThreshold`
+- `testNullAttendance`
+- `testNegativeThreshold`
+- `testShorterStreakAfterBreak`
+
+### JaCoCo хамралт
+
+| Үзүүлэлт | All-defs үе | Нэмэлт тестийн дараа |
+|---|---:|---:|
+| Нийт тест | 5 | 11 |
+| Branch coverage | 87.50% | 100% |
+| Line coverage | 91.67% | 95.83% |
+| Instruction coverage | 90.12% | 96.30% |
+
+Эдгээр нь `DataFlowTargets` классын JaCoCo хамралтын үзүүлэлтүүд юм. JaCoCo нь DU хосын хамралтыг шууд хэмждэггүй.
+
+## Хэсэг C — Fault Seeding
+
+`bonus()` функцэд гурван төрлийн өөрчлөлтийг түр хугацаанд оруулж, JUnit тестүүдээр шалгасан.
+
+| Алдаа | Өөрчлөлт | Үр дүн |
+|---|---|---|
+| M1 | `streak = streak + 1` мөрийг устгасан | 2 тест FAIL |
+| M2 | `best = present` болгосон | 11 тест PASS |
+| M3 | Ашиглагдахгүй `total` хувьсагч нэмсэн | 11 тест PASS |
+
+### Дүгнэлт
+
+M1 өөрчлөлтийг тестүүд илрүүлсэн. M2-ийн үед тестүүд амжилттай ажилласан тул уг өөрчлөлтийг илрүүлээгүй. M3 нь програмын буцаах утгад нөлөөлөхгүй, ашиглагдахгүй definition нэмсэн тул JUnit тестүүд амжилттай ажилласан.
+
+Туршилт бүрийн дараа эх кодыг `git restore` командаар сэргээсэн.
+
+## Эцсийн баталгаажуулалт
+
+`mvn clean verify` командыг ажиллуулахад:
+
+- GcdTest: 3 PASS
+- BonusTest: 8 PASS
+- Нийт: 11 PASS
+- Failures: 0
+- Errors: 0
+- BUILD SUCCESS
+
+Эцсийн JaCoCo үр дүн:
+
+- Branch coverage: 100%
+- Line coverage: 95.83%
+- Instruction coverage: 96.30%
+
+Үр дүнгийн файлууд `results/` хавтсанд хадгалагдсан.
