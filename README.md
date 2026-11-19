@@ -33,10 +33,6 @@ Maven home: /usr/share/maven
 Java version: 17.0.20.1, vendor: Ubuntu, runtime: /usr/lib/jvm/java-17-openjdk-amd64
 Default locale: en, platform encoding: UTF-8
 OS name: "linux", version: "6.6.114.1-microsoft-standard-wsl2", arch: "amd64", family: "unix"
-Maven home: /usr/share/maven
-Java version: 17.0.20.1
-OS name: "linux"
-OS version: "6.6.114.1-microsoft-standard-wsl2"
 ```
 
 ## 3. Төслийн бүтэц, Git
